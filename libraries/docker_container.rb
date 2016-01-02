@@ -209,8 +209,13 @@ module DockerCookbook
       end
     end
 
+    def munge_properties
+      hostname nil if network_mode == 'host'
+    end
+
     action :create do
       validate_container_create
+      munge_properties
 
       converge_if_changed do
         action_delete
